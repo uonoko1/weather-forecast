@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "if": "Bash(git commit:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "STAGED=$(cd /home/sakai/thinking/weather-forecast && git diff --cached --name-only); SRC_CHANGED=$(echo \"$STAGED\" | grep -c '^src/.*\\.py$' || true); DOC_CHANGED=$(echo \"$STAGED\" | grep -cE '^(README\\.md|docs/)' || true); if [ \"$SRC_CHANGED\" -gt 0 ] && [ \"$DOC_CHANGED\" -eq 0 ]; then echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"WARNING: src/ 配下のPythonファイルが変更されていますが、ドキュメント（README.md, docs/）が更新されていません。コード変更に合わせてドキュメントの更新が必要か確認してください。必要であればドキュメントを更新してからコミットしてください。\"}}'; fi",
+            "timeout": 10,
+            "statusMessage": "Checking doc updates..."
+          }
+        ]
+      }
+    ]
+  }
+}

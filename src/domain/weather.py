@@ -61,3 +61,4 @@ FEATURE_COLUMNS = [
     "avg_wind_speed",
     "sunshine_hours",
 ]
+# test
